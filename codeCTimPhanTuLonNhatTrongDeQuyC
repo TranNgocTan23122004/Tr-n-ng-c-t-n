@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+// Định nghĩa hàm nhập mảng
+void nhap_mang(int a[], int n) {
+    if (n == 0) {
+        return;
+    }
+    nhap_mang(a, n - 1);
+    printf("Nhap phan tu a[%d]: ", n - 1);
+    scanf("%d", &a[n - 1]);
+}
+
+// Định nghĩa hàm tìm phần tử lớn nhất trong mảng
+int tim_max(int a[], int n) {
+    if (n == 1) {
+        return a[0];
+    }
+    int max = tim_max(a, n - 1);
+    return (a[n - 1] > max) ? a[n - 1] : max;
+}
+
+// Hàm main để thực thi chương trình
+int main() {
+    int n;
+    printf("Nhap so phan tu cua mang: ");
+    scanf("%d", &n);
+    int a[n];
+    nhap_mang(a, n);
+    int max = tim_max(a, n);
+    printf("Phan tu lon nhat trong mang la: %d", max);
+    return 0;
+}
