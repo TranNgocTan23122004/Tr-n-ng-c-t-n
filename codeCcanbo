@@ -1,0 +1,110 @@
+//Viết chương trình quản lý cán bộ của một phòng ban. Thông tin của mỗi cán bộ như bảng bên dưới gồm mã cán bộ, tên cán bộ, năm sinh, mã phòng, lương. 
+//Mã cán bộ gồm 10 ký tự
+//Tên cán bộ gồm 50 kí tự
+//Năm sinh là số nguyên 
+//Mã phòng gồm 4 kí tự
+//Lương là số nguyên
+//Chương trình gồm các chức năng sau:
+//a) Dùng struct khai báo cấu trúc về thông tin cần lưu trữ của từng cán bộ
+//b) Nhập danh sách n cán bộ dưới dạng mảng 1 chiều
+//c) Đếm số lượng cán bộ có năm sinh trước năm 1999 và có lương lớn hơn 10 triệu
+//d) Sắp xếp danh sách cán bộ theo thứ tự ABC của Tên cán bộ
+//e) Ghi danh sách cán bộ vào tập tin nhị phân với tên “dscb.dat”
+//bằng code C
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_CB 100 // Số lượng cán bộ tối đa
+#define MAX_MCB 11 // Độ dài tối đa của mã cán bộ
+#define MAX_TCB 51 // Độ dài tối đa của tên cán bộ
+#define MAX_MPB 5 // Độ dài tối đa của mã phòng ban
+
+// Khai báo cấu trúc thông tin của từng cán bộ
+typedef struct CanBo {
+    char ma_cb[MAX_MCB];
+    char ten_cb[MAX_TCB];
+    int nam_sinh;
+    char ma_pb[MAX_MPB];
+    int luong;
+} CanBo;
+
+// Nhập thông tin của từng cán bộ
+void nhap_can_bo(CanBo *cb) {
+    printf("Nhap ma can bo: ");
+    scanf("%s", cb->ma_cb);
+
+    printf("Nhap ten can bo: ");
+    scanf(" %[^\n]s", cb->ten_cb);
+
+    printf("Nhap nam sinh: ");
+    scanf("%d", &cb->nam_sinh);
+
+    printf("Nhap ma phong ban: ");
+    scanf("%s", cb->ma_pb);
+
+    printf("Nhap luong: ");
+    scanf("%d", &cb->luong);
+}
+
+// Nhập danh sách n cán bộ
+void nhap_danh_sach_can_bo(CanBo ds_cb[], int *n) {
+    printf("Nhap so luong can bo: ");
+    scanf("%d", n);
+
+    for (int i = 0; i < *n; i++) {
+        printf("Nhap thong tin cho can bo thu %d:\n", i + 1);
+        nhap_can_bo(&ds_cb[i]);
+    }
+}
+
+// Đếm số lượng cán bộ có năm sinh trước năm 1999 và có lương lớn hơn 10 triệu
+int dem_can_bo(CanBo ds_cb[], int n) {
+    int dem = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (ds_cb[i].nam_sinh < 1999 && ds_cb[i].luong > 10000000) {
+            dem++;
+        }
+    }
+
+    return dem;
+}
+
+ 
+int sosanh_ten(const void *a, const void *b) {
+    const CanBo *cb1 = (CanBo *)a;
+    const CanBo *cb2 = (CanBo *)b;
+    return strcmp(cb1->ten_cb, cb2->ten_cb);
+}
+
+// Sắp xếp danh sách cán bộ theo thứ tự ABC của tên cán bộ
+void sap_xep_danh_sach_can_bo(CanBo ds_cb[], int n) {
+qsort(ds_cb, n, sizeof(CanBo), sosanh_ten);
+}
+
+// Ghi danh sách cán bộ vào tập tin nhị phân với tên “dscb.dat”
+void ghi_danh_sach_can_bo(CanBo ds_cb[], int n) {
+FILE *fp;fp = fopen("dscb.dat", "wb");
+if (fp == NULL) {
+    printf("Khong the mo file.\n");
+    return;
+}
+
+fwrite(ds_cb, sizeof(CanBo), n, fp);
+
+fclose(fp);
+}
+
+int main() {
+CanBo ds_cb[MAX_CB];
+int n;nhap_danh_sach_can_bo(ds_cb, &n);
+
+printf("\nSo luong can bo co nam sinh truoc 1999 va luong lon hon 10 trieu: %d\n", dem_can_bo(ds_cb, n));
+
+sap_xep_danh_sach_can_bo(ds_cb, n);
+
+ghi_danh_sach_can_bo(ds_cb, n);
+
+return 0;
+}
