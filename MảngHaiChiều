@@ -1,0 +1,252 @@
+#include <stdio.h>
+#define MAX 100
+#include<math.h>
+#include<time.h>
+void sinhmang(int a[][100], int n, int m) {
+    srand(time(NULL)); // Khởi tạo seed cho hàm rand()
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            a[i][j] = rand() % 51; // Sinh giá trị ngẫu nhiên từ 0 đến 50
+        }
+    }
+}
+
+void xuatMang(int a[][100], int n, int m) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			printf("%d\t", a[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+int tinhTongDong(int a[][100], int m, int dong) {
+	int tong = 0;
+	for (int j = 0; j < m; j++) {
+		tong += a[dong][j];
+	}
+	return tong;
+}
+
+int tinhTongCot(int a[][100], int n, int cot) {
+	int tong = 0;
+	for (int i = 0; i < n; i++) {
+		tong += a[i][cot];
+	}
+	return tong;
+}
+
+int tinhTongDuongCheoChinh(int a[][100], int n) {
+	int tong = 0;
+	for (int i = 0; i < n; i++) {
+		tong += a[i][i];
+	}
+	return tong;
+}
+
+int tinhTongDuongCheoPhu(int a[][100], int n) {
+	int tong = 0;
+	for (int i = 0; i < n; i++) {
+		tong += a[i][n - i - 1];
+	}
+	return tong;
+}
+void lietKePhanTuPhuVaPhanTuChinh(int a[][100], int n) {
+	printf("Cac phan tu tren duong cheo chinh la: ");
+	for (int i = 0; i < n; i++) {
+		printf("%d ", a[i][i]);
+	}
+	printf("\nCac phan tu tren duong cheo phu la: ");
+	for (int i = 0; i < n; i++) {
+		printf("%d ", a[i][n-i-1]);
+	}
+}
+int demPhanTuDuong(int a[][100], int n, int m) {
+	int dem = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (a[i][j] > 0) {
+				dem++;
+			}
+		}
+	}
+	return dem;
+}
+int tinhtongmatran(int a[][100],int m,int n) {
+	int tong = 0;
+	for(int i=0 ; i<n; i++) {
+		for(int j=0; j<m; j++) {
+			tong += a[i][j];
+		}
+	}
+	return tong;
+}
+int timmax(int a[][100],int m,int n) {
+	int max =a[0][0];
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<m; j++) {
+			if(a[i][j]> max) {
+				max = a[i][j];
+			}
+		}
+	}
+	return max;
+}
+int timmin(int a[][100],int m,int n) {
+	int min = a[0][0];
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<m; j++) {
+			if(a[i][j]< min) {
+				min = a[i][j];
+			}
+		}
+	}
+	return min;
+}
+void  sochan(int a[][100],int m,int n) {
+	printf("\nSo chan trong mang la :");
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<m; j++) {
+			if(a[i][j] % 2 == 0) {
+				printf("%d ",a[i][j]);
+
+			}
+		}
+	}
+}
+void  sole(int a[][100],int m,int n) {
+	printf("\nSo le trong mang la ");
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<m; j++) {
+			if(a[i][j] % 2 != 0) {
+				printf("%d ",a[i][j]);
+
+			}
+		}
+	}
+}
+void XuatTamGiacDuoi(int a[][100], int n) {
+	printf("\nTam giac duoi la :");
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<n; j++) {
+			if(i > j)
+				printf("%d ", a[i][j]);
+		}
+	}
+}
+void xuattamgiactren(int a[][100], int n) {
+	printf("\nTam giac tren la :");
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<n; j++) {
+			if(i < j)
+				printf("%d ", a[i][j]);
+		}
+	}
+}
+int timDongTongMax(int a[][100], int n, int m) {
+	int maxTong = 0;
+	int dongMaxTong = 0;
+	for (int i = 0; i < n; i++) {
+		int tong = 0;
+		for (int j = 0; j < m; j++) {
+			tong += a[i][j];
+		}
+		if (tong > maxTong) {
+			maxTong = tong;
+			dongMaxTong = i;
+		}
+	}
+	return dongMaxTong;
+}
+int timmincheochinh(int a[][100],int m,int n) {
+	int min =a[0][0];
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<m; j++) {
+			if(a[i][i] < min) {
+				min = a[i][i];
+			}
+		}
+	}
+	return min;
+}
+int timmaxcheochinh(int a[][100],int m,int n) {
+	int max = a[0][0];
+	for(int i=0; i<n; i++) {
+		for(int j=0; j<m; j++) {
+			if(a[i][i] > max)
+				max = a[i][i];
+		}
+	}
+	return max;
+}
+int laSoNguyenTo(int n) {
+	if (n < 2) {
+		return 0;
+	}
+	for (int i = 2; i <= sqrt(n); i++) {
+		if (n % i == 0) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int demSoNguyenTo(int a[][100], int m, int n) {
+	int dem = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (laSoNguyenTo(a[i][j])) {
+				dem++;
+			}
+		}
+	}
+	return dem;
+}
+int main() {
+	int a[100][100];
+	int n, m;
+	printf("\nNhap vao hang :");
+	scanf("%d",&n);
+	printf("\nNhap vao cot : ");
+	scanf("%d",&m);
+	sinhmang(a,n,m);
+	xuatMang(a, n, m);
+	int dong;
+	printf("\nNhap dong can tinh tong: ");
+	scanf("%d", &dong);
+	if (dong < 0 || dong > n) {
+		printf("Dong khong hop le!\n");
+	} else {
+		int tong = tinhTongDong(a, m, dong);
+		printf("Tong cua dong %d la: %d\n", dong, tong);
+	}
+	int cot;
+	printf("Nhap cot can tinh tong: ");
+	scanf("%d", &cot);
+	if (cot < 0  || cot > m) {
+		printf("Cot khong hop le!\n");
+	} else {
+		int tong = tinhTongCot(a, n, cot);
+		printf("Tong cua cot %d la: %d\n", cot, tong);
+	}
+	int tongCheoChinh = tinhTongDuongCheoChinh(a, n);
+	printf("Tong cua duong cheo chinh la: %d\n", tongCheoChinh);
+	int tongCheoPhu = tinhTongDuongCheoPhu(a, n);
+	printf("Tong cua duong cheo phu la: %d\n", tongCheoPhu);
+	lietKePhanTuPhuVaPhanTuChinh(a,n);
+	printf("\nSo duong trong mang la : %d",demPhanTuDuong(a,n,m));
+	printf("\nTong cua mang la : %d",tinhtongmatran(a,m,n));
+	printf("\nSo lon nhat trong mang la : %d ",timmax(a,m,n));
+	printf("\nSo nho nhat trong mang la : %d ",timmin(a,m,n));
+	sochan(a,m,n);
+	sole(a,m,n);
+	XuatTamGiacDuoi(a,n);
+	xuattamgiactren(a,n);
+	int dongMaxTong = timDongTongMax(a,m,n);
+	printf("\nDong co tong lon nhat la : %d",dongMaxTong);
+	printf("\nSo nho nhat trong duong cheo chinh la : %d ",timmincheochinh(a,m,n));
+	printf("\nSo lon nhat trong duong cheo chinh la : %d ",timmaxcheochinh(a,m,n));
+	printf("\nSo nguyen to co trong mang la : %d",demSoNguyenTo(a,n,m));
+	return 0;
+}
