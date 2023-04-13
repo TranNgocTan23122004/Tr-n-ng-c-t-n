@@ -77,7 +77,7 @@ int tim_chan_cuoi_cung(int a[], int n){
 int tim_max(int a[], int n){
     if (n == 1) return a[0];
     int max = tim_max(a, n-1);
-    return a[n-1] > max  a[n-1] : max;
+    return a[n-1] > max ;
 }
 
 // Câu 12: Đếm số phần tử chẵn trong mảng
@@ -90,7 +90,7 @@ int dem_so_chan(int a[], int n){
 int dem_so_max(int a[], int n){
     if (n == 1) return 1;
     int dem = dem_so_max(a, n-1);
-    if (a[n-1] == tim_max(a, n)) count++;
+    if (a[n-1] == tim_max(a, n)) dem++;
     return dem;
 }
 
