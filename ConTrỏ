@@ -1,0 +1,175 @@
+#include <stdio.h>
+#include <math.h>
+
+// Hàm nhập mảng
+void nhapMang(int *a, int n) {
+    printf("Nhap mang %d phan tu: ", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", a + i);
+    }
+}
+
+// Hàm xuất mảng và tính tổng các phần tử
+void xuatMangTinhTong(int *a, int n) {
+    int tong = 0;
+    printf("Mang vua nhap: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", *(a + i));
+        tong += *(a + i);
+    }
+    printf("\nTong cac phan tu trong mang: %d\n", tong);
+}
+
+// Hàm tính tổng các phần tử chẵn
+int tinhTongChan(int *a, int n) {
+    int tong = 0;
+    for (int i = 0; i < n; i++) {
+        if (*(a + i) % 2 == 0) {
+            tong += *(a + i);
+        }
+    }
+    return tong;
+}
+
+// Hàm tính tổng các phần tử lẻ
+int tinhTongLe(int *a, int n) {
+    int tong = 0;
+    for (int i = 0; i < n; i++) {
+        if (*(a + i) % 2 != 0) {
+            tong += *(a + i);
+        }
+    }
+    return tong;
+}
+
+// Hàm kiểm tra số nguyên tố
+int laSoNguyenTo(int n) {
+    if (n < 2) {
+        return 0;
+    }
+    for (int i = 2; i <= sqrt(n); i++) {
+        if (n % i == 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+// Hàm tính tổng các phần tử nguyên tố
+int tinhTongNguyenTo(int *a, int n) {
+    int tong = 0;
+    for (int i = 0; i < n; i++) {
+        if (laSoNguyenTo(*(a + i))) {
+            tong += *(a + i);
+        }
+    }
+    return tong;
+}
+
+// Hàm tìm phần tử chẵn đầu tiên
+int timChanDauTien(int *a, int n) {
+    for (int i = 0; i < n; i++) {
+        if (*(a + i) % 2 == 0) {
+            return *(a + i);
+        }
+    }
+    return -1; // Không tìm thấy
+}
+
+// Hàm tìm phần tử lẻ đầu tiên
+int timLeDauTien(int *a, int n) {
+    for (int i = 0; i < n; i++) {
+        if (*(a + i) % 2 != 0) {
+            return *(a + i);
+        }
+    }
+    return -1; // Không tìm thấy
+}
+
+// Hàm tìm phần tử nguyên tố đầu tiên
+int timNguyenToDauTien(int *a, int n) {
+    for (int i = 0; i < n; i++) {
+        if (laSoNguyenTo(*(a + i))) {
+            return *(a + i);
+        }
+    }
+    return -1; // Không tìm thấy
+}
+
+// Hàm tìm phần tử chẵn cuối cùng
+int timChanCuoiCung(int *a, int n) {
+    for (int i = n - 1; i >= 0; i--) {
+        if (*(a + i) % 2 == 0) {
+            return *(a + i);
+        }
+    }
+    return -1; // Không tìm thấy
+}
+
+// Hàm kiểm tra số chính phương
+int laSoChinhPhuong(int n) {
+    int can = sqrt(n);
+    return (can * can == n);
+}
+
+// Hàm tìm phần tử chính phương cuối cùng
+int timChinhPhuongCuoiCung(int *a, int n) {
+    for (int i = n - 1; i >= 0; i--) {
+        if (laSoChinhPhuong(*(a + i))) {
+            return *(a + i);
+        }
+    }
+    return -1; // Không tìm thấy
+}
+
+int main() {
+    int n;
+    printf("Nhap so phan tu cua mang: ");
+    scanf("%d", &n);
+
+    int a[n];
+    nhapMang(a, n);
+    xuatMangTinhTong(a, n);
+
+    printf("Tong cac phan tu chan: %d\n", tinhTongChan(a, n));
+    printf("Tong cac phan tu le: %d\n", tinhTongLe(a, n));
+    printf("Tong cac phan tu nguyen to: %d\n", tinhTongNguyenTo(a, n));
+
+    int chanDauTien = timChanDauTien(a, n);
+    if (chanDauTien == -1) {
+        printf("Khong co phan tu chan\n");
+    } else {
+        printf("Phan tu chan dau tien: %d\n", chanDauTien);
+    }
+
+    int leDauTien = timLeDauTien(a, n);
+    if (leDauTien == -1) {
+        printf("Khong co phan tu le\n");
+    } else {
+        printf("Phan tu le dau tien: %d\n", leDauTien);
+    }
+
+    int nguyenToDauTien = timNguyenToDauTien(a, n);
+    if (nguyenToDauTien == -1) {
+        printf("Khong co phan tu nguyen to\n");
+    } else {
+        printf("Phan tu nguyen to dau tien: %d\n", nguyenToDauTien);
+    }
+
+    int chanCuoiCung = timChanCuoiCung(a, n);
+    if (chanCuoiCung == -1) {
+        printf("Khong co phan tu chan\n");
+    } else {
+        printf("Phan tu chan cuoi cung: %d\n", chanCuoiCung);
+    }
+
+    int chinhPhuongCuoiCung = timChinhPhuongCuoiCung(a, n);
+    if (chinhPhuongCuoiCung == -1) {
+        printf("Khong co phan tu chinh phuong\n");
+    } else {
+        printf("Phan tu chinh phuong cuoi cung: %d\n", chinhPhuongCuoiCung);
+    }
+
+    return 0;
+}
+//liên hệ zalo 
