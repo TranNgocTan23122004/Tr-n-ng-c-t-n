@@ -1,0 +1,120 @@
+#include<stdio.h>
+#include<math.h>
+
+// Khai báo hàm kiểm tra số nguyên tố
+int kiem_tra_so_nguyen_to(int n){
+    if (n < 2) return 0;
+    for (int i = 2; i <= sqrt(n); i++){
+        if (n % i == 0) return 0;
+    }
+    return 1;
+}
+
+// Câu 2: Nhập mảng
+void nhap_mang(int a[], int n){
+    if (n == 0) return;
+    nhap_mang(a, n-1);
+    printf("Nhap vao phan tu thu %d: ", n);
+    scanf("%d", &a[n-1]);
+}
+
+// Câu 3: Tính tổng các phần tử trong mảng
+int tinh_tong(int a[], int n){
+    if (n == 0) return 0;
+    return a[n-1] + tinh_tong(a, n-1);
+}
+
+// Câu 4: Tính tổng các phần tử chẵn trong mảng
+int tinh_tong_chan(int a[], int n){
+    if (n == 0) return 0;
+    if (a[n-1] % 2 == 0) return a[n-1] + tinh_tong_chan(a, n-1);
+    return tinh_tong_chan(a, n-1);
+}
+
+// Câu 5: Tính tổng các phần tử lẻ trong mảng
+int tinh_tong_le(int a[], int n){
+    if (n == 0) return 0;
+    if (a[n-1] % 2 == 1) return a[n-1] + tinh_tong_le(a, n-1);
+    return tinh_tong_le(a, n-1);
+}
+
+// Câu 6: Tính tổng các phần tử nguyên tố trong mảng
+int tinh_tong_nguyen_to(int a[], int n){
+    if (n == 0) return 0;
+    if (kiem_tra_so_nguyen_to(a[n-1])) return a[n-1] + tinh_tong_nguyen_to(a, n-1);
+    return tinh_tong_nguyen_to(a, n-1);
+}
+
+// Câu 7: Tìm phần tử chẵn đầu tiên trong mảng
+int tim_chan_dau_tien(int a[], int n){
+    if (n == 0) return -1;
+    if (a[n-1] % 2 == 0) return a[n-1];
+    return tim_chan_dau_tien(a, n-1);
+}
+
+// Câu 8: Tìm phần tử lẻ đầu tiên trong mảng
+int tim_le_dau_tien(int a[], int n){
+    if (n == 0) return -1;
+    if (a[n-1] % 2 == 1) return a[n-1];
+    return tim_le_dau_tien(a, n-1);
+}
+
+// Câu 9: Tìm phần tử nguyên tố đầu tiên trong mảng
+int tim_nguyen_to_dau_tien(int a[], int n){
+    if (n == 0) return -1;
+    if (kiem_tra_so_nguyen_to(a[n-1])) return a[n-1];
+    return tim_nguyen_to_dau_tien(a, n-1);
+}
+
+// Câu 10: Tìm phần tử chẵn cuối cùng trong mảng
+int tim_chan_cuoi_cung(int a[], int n){
+    if (n == 0) return -1;
+    if (a[n-1] % 2 == 0) return a[n-1];
+    return tim_chan_cuoi_cung(a, n-1);
+}
+
+// Câu 11: Tìm phần tử lớn nhất trong mảng
+int tim_max(int a[], int n){
+    if (n == 1) return a[0];
+    int max = tim_max(a, n-1);
+    return a[n-1] > max  a[n-1] : max;
+}
+
+// Câu 12: Đếm số phần tử chẵn trong mảng
+int dem_so_chan(int a[], int n){
+    if (n == 0) return 0;
+    return (a[n-1] % 2 == 0) ? 1 + dem_so_chan(a, n-1) : dem_so_chan(a, n-1);
+}
+
+// Câu 13: Đếm số phần tử lớn nhất trong mảng
+int dem_so_max(int a[], int n){
+    if (n == 1) return 1;
+    int dem = dem_so_max(a, n-1);
+    if (a[n-1] == tim_max(a, n)) count++;
+    return dem;
+}
+
+// Hàm main
+int main(){
+    int a[100];
+    int n;
+    printf("Nhap vao so phan tu mang: ");
+    scanf("%d", &n);
+    nhap_mang(a, n);
+    printf("Mang vua nhap la: ");
+    for (int i = 0; i < n; i++){
+        printf("%d ", a[i]);
+    }
+    printf("\nTong cac phan tu trong mang la: %d", tinh_tong(a, n));
+    printf("\nTong cac phan tu chan trong mang la: %d", tinh_tong_chan(a, n));
+    printf("\nTong cac phan tu le trong mang la: %d", tinh_tong_le(a, n));
+    printf("\nTong cac phan tu nguyen to trong mang la: %d", tinh_tong_nguyen_to(a, n));
+    printf("\nPhan tu chan dau tien trong mang la: %d", tim_chan_dau_tien(a, n));
+    printf("\nPhan tu le dau tien trong mang la: %d", tim_le_dau_tien(a, n));
+    printf("\nPhan tu nguyen to dau tien trong mang la: %d", tim_nguyen_to_dau_tien(a, n));
+    printf("\nPhan tu chan cuoi cung trong mang la: %d", tim_chan_cuoi_cung(a, n));
+    printf("\nPhan tu lon nhat trong mang la: %d", tim_max(a, n));
+    printf("\nSo phan tu chan trong mang la: %d", dem_so_chan(a, n));
+    printf("\nSo phan tu lon nhat trong mang la: %d", dem_so_max(a, n));
+    return 0;
+}
