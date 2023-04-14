@@ -1,0 +1,172 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+void nhapMang(int (*a)[100], int m, int n) {
+    printf("Nhap mang:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("a[%d][%d] = ", i, j);
+            scanf("%d", (*(a + i) + j));
+        }
+    }
+}
+
+void xuatMangInt(int (*a)[100], int m, int n) {
+    printf("Mang vua nhap la:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", *(*(a + i) + j));
+        }
+        printf("\n");
+    }
+}
+
+void xuatMangFloat(float (*a)[100], int m, int n) {
+    printf("Mang vua nhap la:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%f ", *(*(a + i) + j));
+        }
+        printf("\n");
+    }
+}
+
+int tongMang(int (*a)[100], int m, int n) {
+    int sum = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            sum += *(*(a + i) + j);
+        }
+    }
+    return sum;
+}
+
+int tongChan(int (*a)[100], int m, int n) {
+    int sum = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (*(*(a + i) + j) % 2 == 0) {
+                sum += *(*(a + i) + j);
+            }
+        }
+    }
+    return sum;
+}
+
+int tongLe(int (*a)[100], int m, int n) {
+    int sum = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (*(*(a + i) + j) % 2 != 0) {
+                sum += *(*(a + i) + j);
+            }
+        }
+    }
+    return sum;
+}
+
+bool laSoNguyenTo(int x) {
+    if (x < 2) {
+        return false;
+    }
+    for (int i = 2; i <= x / 2; i++) {
+        if (x % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int tongNguyenTo(int (*a)[100], int m, int n) {
+    int sum = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (laSoNguyenTo(*(*(a + i) + j))) {
+                sum += *(*(a + i) + j);
+            }
+        }
+    }
+    return sum;
+}
+
+int tongDuongCheoChinh(int (*a)[100], int m, int n) {
+    int sum = 0;
+    for (int i = 0; i < m; i++) {
+        sum += *(*(a + i) + i);
+    }
+    return sum;
+}
+
+int tongDuongCheoPhu(int (*a)[100], int m, int n) {
+    int sum = 0;
+    for (int i = 0; i < m; i++) {
+        sum += *(*(a + i) + n - i - 1);
+    }
+    return sum;
+}
+
+int tongBien(int (*a)[100], int m, int n) {
+    int sum = 0;
+    for (int i = 0; i < m; i++) {
+        sum += *(*(a + i) + 0) + *(*(a + i) + n - 1);
+    }
+    for (int j = 1; j < n - 1; j++) {
+        sum += *(*(a + 0) + j) + *(*(a + m - 1) + j);
+    }
+    return sum;
+}
+
+int timChanDauTien(int (*a)[100], int m, int n) {
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (*(*(a + i) + j) % 2 == 0) {
+                return *(*(a + i) + j);
+            }
+        }
+    }
+    return -1;
+}
+
+int timLeDauTien(int (*a)[100], int m, int n) {
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (*(*(a + i) + j) % 2 != 0) {
+                return *(*(a + i) + j);
+            }
+        }
+    }
+    return -1;
+}
+
+int timNguyenToDauTien(int (*a)[100], int m, int n) {
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (laSoNguyenTo(*(*(a + i) + j))) {
+                return *(*(a + i) + j);
+            }
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int m, n;
+    int a[100][100];
+    float b[100][100];
+    printf("Nhap so dong m: ");
+    scanf("%d", &m);
+    printf("Nhap so cot n: ");
+    scanf("%d", &n);
+    nhapMang(a, m, n);
+    xuatMangInt(a, m, n);
+    printf("Tong cac phan tu trong mang la: %d\n", tongMang(a, m, n));
+    printf("Tong cac phan tu chan trong mang la: %d\n", tongChan(a, m, n));
+    printf("Tong cac phan tu le trong mang la: %d\n", tongLe(a, m, n));
+    printf("Tong cac phan tu nguyen to trong mang la: %d\n", tongNguyenTo(a, m, n));
+    printf("Tong cac phan tu nam tren duong cheo chinh la: %d\n", tongDuongCheoChinh(a, m, n));
+    printf("Tong cac phan tu nam tren duong cheo phu la : %d\n",tongDuongCheoPhu(a,m,n));
+    printf("Tong cac bien tren phan tu la : %d\n",tongBien(a,m,n));
+    printf("Phan tu chan dau tien  la : %d\n",timChanDauTien(a,m,n));
+    printf("Phan tu le dau tien  la : %d\n",timLeDauTien(a,m,n));
+    printf("So nguyen to la : %d\n",timNguyenToDauTien(a,m,n));
+}
