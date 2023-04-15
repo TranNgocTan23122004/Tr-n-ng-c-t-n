@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct {
+    char hoten[31];
+    char manganh[3];
+    float diemthi;
+} HS;
+
+void nhaphocsinh(HS* h) {
+    printf("Nhap ho ten: ");
+    fflush(stdin);
+    gets(h->hoten);
+    printf("Nhap ma nganh: ");
+    fflush(stdin);
+    gets(h->manganh);
+    printf("Nhap diem thi: ");
+    scanf("%f", &h->diemthi);
+}
+
+void xuathocsinh(HS* h) {
+    printf("%-30s %-3s %5.1f\n", h->hoten, h->manganh, h->diemthi);
+}
+
+void nhaphocsinh_contro(HS* ph) {
+    printf("Nhap ho ten: ");
+    fflush(stdin);
+    gets(ph->hoten);
+    printf("Nhap ma nganh: ");
+    fflush(stdin);
+    gets(ph->manganh);
+    printf("Nhap diem thi: ");
+    scanf("%f", &ph->diemthi);
+}
+
+void xuathocsinh_contro(HS* ph) {
+    printf("%-30s %-3s %5.1f\n", ph->hoten, ph->manganh, ph->diemthi);
+}
+
+void nhapmanghocsinh(HS a[], int n) {
+    for (int i = 0; i < n; i++) {
+        nhaphocsinh(&a[i]);
+    }
+}
+
+void xuatmanghocsinh(HS a[], int n) {
+    printf("%-30s %-3s %s\n", "Ho ten", "Ma nganh", "Diem thi");
+    for (int i = 0; i < n; i++) {
+        xuathocsinh(&a[i]);
+    }
+}
+
+void nhaphocsinh_dieu_kien(HS* ph) {
+    do {
+        printf("Nhap ma nganh (2 chu cai viet hoa): ");
+        fflush(stdin);
+        gets(ph->manganh);
+    } while (!((ph->manganh[0] >= 'A' && ph->manganh[0] <= 'Z' && ph->manganh[1] >= 'A' && ph->manganh[1] <= 'Z') && strlen(ph->manganh) == 2));
+    do {
+        printf("Nhap diem thi (0-10): ");
+        scanf("%f", &ph->diemthi);
+        fflush(stdin);
+    } while (ph->diemthi < 0 || ph->diemthi > 10);
+    printf("Nhap ho ten: ");
+    fflush(stdin);
+    gets(ph->hoten);
+}
+
+void timhocsinh_diemlonhon8(HS a[], int n) {
+    printf("Cac hoc sinh co diem thi tren 8:\n");
+    printf("%-30s %-3s %s\n", "Ho ten", "Ma nganh", "Diem thi");
+    for (int i = 0; i < n; i++) {
+        if (a[i].diemthi > 8) {
+            xuathocsinh(&a[i]);
+        }
+    }
+}
+
+void timhocsinh_nganhTH(HS a[], int n) {
+    printf("Cac hoc sinh thuoc nganh TH:\n");
+    printf("%-30s %-3s %s\n", "Ho ten", "Ma nganh", "Diem thi");
+    for (int i = 0; i < n; i++) {
+        if (strcmp(a[i].manganh, "TH") == 0) {
+            xuathocsinh(&a[i]);
+        }
+    }
+}
+
+int cmp(const void* a, const void* b) {
+    HS* ha = (HS*)a;
+    HS* hb = (HS*)b;
+    if (ha->diemthi < hb->diemthi) {
+        return -1;
+    } else if (ha->diemthi > hb->diemthi) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+void sapxepmanghocsinh(HS a[], int n) {
+    qsort(a, n, sizeof(HS), cmp);
+}
+
+int main() {
+    int n;
+    printf("Nhap so luong hoc sinh: ");
+    scanf("%d", &n);
+    HS a[n];
+    printf("Nhap danh sach hoc sinh:\n");
+    nhapmanghocsinh(a, n);
+    printf("Danh sach hoc sinh vua nhap:\n");
+    xuatmanghocsinh(a, n);
+    printf("Nhap hoc sinh thoa dieu kien:\n");
+    HS h;
+    nhaphocsinh_dieu_kien(&h);
+    printf("Hoc sinh vua nhap:\n");
+    xuathocsinh_contro(&h);
+    timhocsinh_diemlonhon8(a, n);
+    timhocsinh_nganhTH(a, n);
+    sapxepmanghocsinh(a, n);
+    printf("Danh sach hoc sinh sau khi sap xep theo diem thi:\n");
+    xuatmanghocsinh(a, n);
+    return 0;
+}
