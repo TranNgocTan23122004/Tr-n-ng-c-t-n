@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+void nhapMang(float a[], int n, int i){
+    if(i == n){
+        return;
+    }
+    printf("Nhap phan tu thu %d: ", i+1);
+    scanf("%f", &a[i]);
+    nhapMang(a, n, i+1);
+}
+
+int demSoAm(float a[], int n, int i, int dem){
+    if(i == n){
+        return dem;
+    }
+    if(a[i] < 0){
+        dem++;
+    }
+    return demSoAm(a, n, i+1, dem);
+}
+
+int main(){
+    int n;
+    printf("Nhap so phan tu cua mang: ");
+    scanf("%d", &n);
+    float a[n];
+    nhapMang(a, n, 0);
+    int dem = demSoAm(a, n, 0, 0);
+    printf("So luong so am trong mang la: %d\n", dem);
+    return 0;
+}
