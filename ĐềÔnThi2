@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int kiemtrasonguyento(int n) {
+    if (n < 2) {
+        return 0;
+    }
+    for (int i = 2; i <= sqrt(n); i++) {
+        if (n % i == 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void capphat(int*** p, int m, int n) {
+    *p = (int**)malloc(m * sizeof(int*));
+    for (int i = 0; i < m; i++) {
+        (*p)[i] = (int*)malloc(n * sizeof(int));
+    }
+}
+
+void nhapmang(int** p, int m, int n) {
+    printf("Nhap cac phan tu cua mang:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("a[%d][%d] = ", i, j);
+            scanf("%d", &p[i][j]);
+        }
+    }
+}
+
+void xuatmang(int** p, int m, int n) {
+    printf("Mang da nhap:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%4d", p[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void xuatsochan(int** p, int m, int n) {
+    printf("Cac phan tu chan trong mang:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (p[i][j] % 2 == 0) {
+                printf("%4d", p[i][j]);
+            }
+        }
+    }
+    printf("\n");
+}
+
+int tinhtong(int** p, int m, int n) {
+    int tong = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            tong += p[i][j];
+        }
+    }
+    return tong;
+}
+
+int tinhtongsonguyento(int** p, int m, int n) {
+    int tong = 0;
+    printf("Cac so nguyen to trong mang:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (kiemtrasonguyento(p[i][j])) {
+                printf("%4d", p[i][j]);
+                tong += p[i][j];
+            }
+        }
+    }
+    printf("\n");
+    return tong;
+}
+
+void xuatvitrisonguyento(int** p, int m, int n) {
+    int flag = 0;
+    printf("Vi tri cua cac so nguyen to trong mang:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (kiemtrasonguyento(p[i][j])) {
+                printf("(%d,%d) ", i, j);
+                flag = 1;
+            }
+        }
+    }
+    if (flag == 0) {
+        printf("Mang khong co so nguyen to.");
+    }
+    printf("\n");
+}
+
+int main() {
+    int m, n;
+    int** a;
+    printf("Nhap so dong m: ");
+    scanf("%d", &m);
+    printf("Nhap so cot n: ");
+    scanf("%d", &n);
+    capphat(&a, m, n);
+    nhapmang(a, m, n);
+    xuatmang(a, m, n);
+    xuatsochan(a, m, n);
+    int tong = tinhtong(a, m, n);
+    printf("Tong cac phan tu trong mang: %d\n", tong);
+    int tongnguyento = tinhtongsonguyento(a, m, n);
+    printf("Tong cac so nguyen to trong mang: %d\n", tongnguyento);
+    xuatvitrisonguyento(a, m, n);
+    for (int i = 0; i < m; i++) {
+        free(a[i]);
+    }
+    free(a);
+    return 0;
+}
