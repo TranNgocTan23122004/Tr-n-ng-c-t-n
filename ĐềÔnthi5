@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void sinhMaTran(int **a, int m, int n) {
+    srand(time(NULL));
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            a[i][j] = rand() % 51;
+        }
+    }
+}
+
+void lietKeChiaHet(int **a, int m, int n, int x) {
+    printf("Cac so chia het cho %d trong ma tran la: ", x);
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (a[i][j] % x == 0) {
+                printf("%d ", a[i][j]);
+            }
+        }
+    }
+    printf("\n");
+}
+
+int laSoNguyenTo(int n) {
+    if (n < 2) {
+        return 0;
+    }
+    for (int i = 2; i <= n/2; i++) {
+        if (n % i == 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int demSoNguyenTo(int **a, int m, int n) {
+    int count = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (laSoNguyenTo(a[i][j])) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+double tinhTrungBinhCot(int **a, int m, int n, int j) {
+    double sum = 0;
+    for (int i = 0; i < m; i++) {
+        sum += a[i][j];
+    }
+    return sum/m;
+}
+
+void timCotTrungBinhLonNhat(int **a, int m, int n) {
+    int max_col = 0;
+    double max_avg = tinhTrungBinhCot(a, m, n, 0);
+    for (int j = 1; j < n; j++) {
+        double avg = tinhTrungBinhCot(a, m, n, j);
+        if (avg > max_avg) {
+            max_col = j;
+            max_avg = avg;
+        }
+    }
+    printf("Cot co gia tri trung binh lon nhat la cot thu %d, voi gia tri trung binh la %lf\n", max_col+1, max_avg);
+}
+
+int main() {
+    int m, n;
+    
+    printf("Nhap so hang va so cot cua ma tran: ");
+    scanf("%d%d", &m, &n);
+    
+    int **a = (int**) malloc(m * sizeof(int*)); // cấp phát động cho m hàng
+    for (int i = 0; i < m; i++) {
+        a[i] = (int*) malloc(n * sizeof(int)); // cấp phát động cho n cột trong mỗi hàng
+    }
+    
+    sinhMaTran(a, m, n);
+    
+    printf("Ma tran vua sinh ra la:\n");
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", a[i][j]);
+        }
+        printf("\n");
+    }
+    
+    int x;
+    printf("Nhap so x: ");
+    scanf("%d", &x);
+    lietKeChiaHet(a, m, n, x);
+    
+    int count = demSoNguyenTo(a, m, n);
+    printf("So luong so nguyen to trong ma tran la: %d\n", count);
+    
+    timCotTrungBinhLonNhat(a, m, n);
+    
+    for (int i = 0; i < m; i++) {
+        free(a[i]); // giải phóng từng cột trong mỗi hàng
+    }
+    free(a); // giải phóng hàng
+    return 0;
+}
