@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+int tong(int n) {
+    if (n == 1) {
+        return 1;
+    } else {
+        return n + tong(n-1);
+    }
+}
+
+int tonglechan(int n) {
+    if (n == 1) {
+        return 1;
+    } else if (n % 2 == 0) {
+        return n - 1 + tonglechan(n-2);
+    } else {
+        return n + tonglechan(n-2);
+    }
+}
+
+int tongmang(int a[], int n) {
+    if (n == 0) {
+        return 0;
+    } else {
+        return a[n-1] + tongmang(a, n-1);
+    }
+}
+
+int tongsole(int a[], int n) {
+    if (n == 0) {
+        return 0;
+    } else {
+        if (a[n-1] % 2 == 1) {
+            return a[n-1] + tongsole(a, n-1);
+        } else {
+            return tongsole(a, n-1);
+        }
+    }
+}
+
+int fibonacci(int n) {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return fibonacci(n-1) + fibonacci(n-2);
+    }
+}
+
+int main() {
+    int n;
+    int a[100];
+    printf("\nNhap vao n: ");
+    scanf("%d",&n);
+    printf("Tong S = %d\n", tong(n));
+    printf("Tong S' = %d\n", tonglechan(n));
+    printf("Nhap %d phan tu cua mang a: ", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &a[i]);
+    }
+    printf("Tong mang = %d\n", tongmang(a, n));
+    printf("Tong cac so le trong mang = %d\n", tongsole(a, n));
+    printf("Fibonacci thu %d = %d\n", n, fibonacci(n));
+    return 0;
+}
